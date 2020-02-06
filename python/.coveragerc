@@ -1,0 +1,6 @@
+[run]
+source = catalog
+[report]
+omit =
+    */python?.?/*
+    */site-packages/nose/*
