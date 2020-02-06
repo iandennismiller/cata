@@ -32,16 +32,12 @@ tox:
 	tox
 
 release:
-	# 1. create ~/.pypirc
-	# 2. python setup.py register # notify pypi of new package
-	python setup.py sdist upload
+	# 1. create API token at https://pypi.org/manage/account/token/
+	# 2. create ~/.pypirc with [pypi] / username = __token__ / password = pypi-...
+	python setup.py sdist bdist_wheel
+	twine upload --config-file ~/.pypirc dist/*
 
 coverage:
 	nosetests --with-xcoverage --cover-package=$(MOD_NAME) --cover-tests -c etc/tests.cfg
-
-# create a homebrew install script
-homebrew:
-	bin/poet-homebrew.sh
-	cp /tmp/catalog.rb etc/catalog.rb
 
 .PHONY: clean install test watch docs release tox develop homebrew coverage requirements

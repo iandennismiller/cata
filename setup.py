@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# catalog (c) Ian Dennis Miller
+# cata (c) Ian Dennis Miller
 
 import re
 import os
@@ -14,14 +14,14 @@ def read(*rnames):
 
 def grep(attrname):
     pattern = r"{0}\W*=\W*'([^']+)'".format(attrname)
-    strval, = re.findall(pattern, read('catalog/__meta__.py'))
+    strval, = re.findall(pattern, read('cata/__meta__.py'))
     return strval
 
 
 setup(
     version=grep('__version__'),
-    name='catalog',
-    description="Catalog is a dataset management platform for Python and R",
+    name='cata',
+    description="cata is a dataset management platform for Python and R",
     packages=find_packages(),
     scripts=[
     ],
