@@ -1,7 +1,7 @@
 # Python Makefile
 
 SHELL=/bin/bash
-MOD_NAME=catalog
+MOD_NAME=cata
 TEST_CMD=nosetests -w $(MOD_NAME) -c etc/tests.cfg --with-coverage --cover-package=$(MOD_NAME)
 
 install:

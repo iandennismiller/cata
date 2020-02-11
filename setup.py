@@ -24,6 +24,7 @@ setup(
     description="cata is a dataset management platform for Python and R",
     packages=find_packages(),
     scripts=[
+        'bin/cata',
     ],
     long_description=read('Readme.rst'),
     classifiers=[],  # Get strings from http://pypi.python.org/pypi?%3Aaction=list_classifiers

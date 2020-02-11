@@ -6,3 +6,5 @@
 /.coveralls.yml
 /coverage.xml
 /.vscode/
+.noseids
+*.pyc
