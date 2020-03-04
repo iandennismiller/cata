@@ -32,10 +32,10 @@ class Cata:
             self.db.commit()
 
     def create(self, df, **params):
-        checksum = hashlib.sha256(pd.util.hash_pandas_object(df, index=True).values).hexdigest()
-        df.to_sql(checksum, self.db, if_exists='replace', index=False)
-
+        checksum = get_checksum(df, params["params"])
         params_str = json.dumps(params["params"])
+
+        df.to_sql(checksum, self.db, if_exists='replace', index=False)
 
         c = self.db.cursor()
         c.execute(''' INSERT INTO catalog(ROWID, checksum, params) VALUES(?, ?, ?) ''',
@@ -45,7 +45,16 @@ class Cata:
         return(checksum)
 
     def read(self, checksum):
-        return(pd.read_sql("select * from '{}'".format(checksum), self.db))
+        try:
+            return(pd.read_sql("select * from '{}'".format(checksum), self.db))
+        except:
+            return
+
+    def get_params(self, checksum):
+        c = self.db.cursor()
+        c.execute(''' SELECT params FROM catalog WHERE checksum=? LIMIT 1''', (checksum,))
+        result = c.fetchone()[0]
+        return(json.loads(result))
 
     def find(self, **params):
         pass
@@ -56,6 +65,24 @@ class Cata:
     def delete(self):
         pass
 
+
+def get_checksum(df, params):
+    # sha256(concatenated column names, serialized params, num_rows, num_cols, num_tables_in_cata)
+    num_rows, num_cols = df.shape
+    hash_values = {
+        'columns': "".join(list(df.columns.values)),
+        'params': json.dumps(params, sort_keys=True, separators=(',', ':')),
+        'rows': num_rows,
+        'cols': num_cols,
+    }
+    hash_fmt = "{rows} {cols} {columns} {params}"
+    hash_str = hash_fmt.format(**hash_values)
+    print(hash_str)
+    checksum = hashlib.sha256(hash_str.encode('ascii')).hexdigest()
+    print(checksum)
+
+    # checksum = hashlib.sha256(pd.util.hash_pandas_object(df, index=True).values).hexdigest()
+    return(checksum)
 
 if __name__ == '__main__':
     main(1)

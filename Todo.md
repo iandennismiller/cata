@@ -18,4 +18,12 @@
 
 ## Milestone 2
 
+- add CSV_FILENAME PARAMS: copy a CSV file to the .cata folder and add an entry to the data catalog.  Also ensure CSV can be loaded as data frame.
+- add DATA_FRAME PARAMS: serialize data frame to CSV and add to .cata
+- get CHECKSUM: obtain a data frame
+- get PARAMS_JSON INDEX: search catalog for parameters matching query and return first data frame that matches.  Or, return INDEX data frame if requested.
+- ls: list entries in .cata
+- find PARAMS_JSON: search catalog for parameters matching query
+- delete CHECKSUM: delete a .cata entry and file
+
 ## Done
