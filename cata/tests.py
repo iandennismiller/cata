@@ -11,11 +11,11 @@ df = pd.DataFrame(data={
     "value": [1, 4, 9] 
 })
 params = {"lr": 0.01, "momentum": 0.9}
-checksum_good = "6a493bd94026b8ff60fcc1601fdd4ec144a2e82eb46d4b4a973263d89130beb7"
+checksum_good = "5c7dfb0fb299fb8adf71ed3f53c65ef185aebd53451a949cc71b79d124b91125"
 
 class BasicTestCase(BaseCase):
     def setUp(self):
-        self.cata = Cata("/tmp/test.cata", overwrite=True)
+        self.cata = Cata()
 
     def tearDown(self):
         pass
@@ -37,9 +37,12 @@ class BasicTestCase(BaseCase):
 
         self.assertEqual(get_checksum(df_test, params_test), checksum_good)
 
-    def test_checksum(self):
+    def test_find(self):
         "ensure a table checksum works"
-        # result = self.cata.create(df, params={"lr": 0.01, "momentum": 0.9})
-        checksum = get_checksum(df, params)
+        df_test = self.cata.find(lr=0.01)
+        self.assertIsNotNone(df_test)
+
+    def test_search(self):
+        "ensure a table checksum works"
+        checksum = self.cata.search(lr=0.01)
         self.assertEqual(checksum, checksum_good)
-        #assert(False)

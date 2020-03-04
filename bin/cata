@@ -12,10 +12,10 @@ def cli():
     pass
 
 @click.command('create', short_help='Create entry in Catabase from CSV.')
-@click.option('csv', required=True)
+@click.argument('csv', required=True)
 def do_create(csv):
-    pass
-    # m3u_manage.analyze(directory)
+    c = cata.Cata()
+    c.create(csv_filename=csv)
 
 cli.add_command(do_create)
 
